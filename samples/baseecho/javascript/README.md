@@ -13,7 +13,7 @@
 
 ## Usage
 
-- cd `repo-dir`\samples\baseecho\javascript
+- cd `repo-dir`\bots\samples\baseecho\javascript
 - npm install
 - npm start (shows `app listening on 3978`)
 - from emulator, select `http://localhost:3978/api/messages`
