@@ -10,11 +10,11 @@
 - create `repo-dir` (local repo directory)
 - cd `repo-dir`
 - git clone https://github.com/roalexan/bots.git
+- cd `repo-dir`\bots\samples\baseecho\typescript
+- npm install
 
 ## Usage
 
-- cd `repo-dir`\bots\samples\baseecho\typescript
-- npm install
 - npm start (shows `app listening on 3978`)
 - from emulator, select `http://localhost:3978/api/messages`
 - click `CONNECT`
