@@ -11,6 +11,8 @@
   "license": "MIT",
   "dependencies": {
     "botbuilder": "^4.0.0-preview1.1",
+    "botbuilder-transcript-cosmosdb": "^4.0.1",
+    "documentdb": "^1.14.5",
     "express": "^4.16.3"
   },
   "devDependencies": {
