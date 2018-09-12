@@ -1,0 +1,21 @@
+{
+  "name": "feedbackbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "botbuilder": "^4.0.0-aicat1.2",
+    "botbuilder-feedback": "^4.0.8",
+    "express": "^4.16.3",
+    "fetch-ponyfill": "^6.0.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.0"
+  }
+}
