@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "botbuilder": "^4.0.0-aicat1.2",
-    "botbuilder-feedback": "^4.0.2",
+    "botbuilder-feedback": "^4.0.8",
     "express": "^4.16.3",
     "fetch-ponyfill": "^6.0.2",
     "tslint": "^5.11.0",
