@@ -6,7 +6,7 @@ import { Feedback, FeedbackAction, Message } from 'botbuilder-feedback';
 import * as express from 'express';
 import { GREETING, REPLY, USAGE } from "./text";
 
-// Create server
+// Create HTTP server
 const server = express();
 const port = process.env.PORT || 3978;
 server.listen(port, () => console.log(`${server.name} listening on ${port}`));
