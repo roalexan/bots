@@ -1,5 +1,18 @@
-import { BotFrameworkAdapter, BotStateSet, ConversationState, MemoryStorage, TurnContext, UserState } from 'botbuilder';
+import { ActivityTypes, BotFrameworkAdapter, BotStateSet, ConversationState, MemoryStorage, TurnContext, UserState } from 'botbuilder';
+import { config } from 'dotenv';
 import * as express from 'express';
+import * as request from 'superagent';
+import { GREETING, REPLY, USAGE } from "./text";
+
+const HOST = 'http://api.openweathermap.org';
+
+// load local dev variables
+config({path: `${__dirname}/../.env`});
+
+const openWeatherMapAPIKey = process.env.OPENWEATHERMAP_API_KEY;
+if (openWeatherMapAPIKey === '<YOUR-API-KEY>') {
+  throw new Error('OPENWEATHERMAP_API_KEY not set. Please set in the .env file.');
+}
 
 // Create HTTP server
 const server = express();
@@ -12,90 +25,34 @@ const adapter = new BotFrameworkAdapter({
   appPassword: process.env.MICROSOFT_APP_PASSWORD,
 });
 
-const MIN = 0;
-const MAX = 10;
+// Handler for every conversation turn
+const botLogic = async (context: any) => {
+  if (context.activity.type === ActivityTypes.ConversationUpdate && context.activity.membersAdded[0].name === 'Bot') {
+      // Welcome message here, bot will message you first
+      await context.sendActivity(GREETING);
+      await context.sendActivity(USAGE);
+  } else if (context.activity.type === 'message') {
+      // bot will show text with 2 suggested action buttons (good answer / bad answer)
+      // if user clicks a button, the response is captured as a trace activity, along with original question and original bot response.
+      // if user does not click a button, normal bot processing occurs
+      // const reply = REPLY + context.activity.text;
 
-interface State {
-  sessionState: string;
-  low: number;
-  high: number;
-  guess: number;
-}
-
-const conversationState = new ConversationState<State>(new MemoryStorage());
-
-// middleware code that writes back the conversation state at the end of the "turn"
-adapter.use(conversationState);
-
-async function init(context: TurnContext) {
-  const state = await conversationState.read(context);
-  state.low = MIN;
-  state.high = MAX;
-  await showInstructions(context);
-  await askReady(context);
-  state.sessionState = 'askReady';
-}
-
-async function showInstructions(context: TurnContext) {
-  const state = await conversationState.read(context);
-  await context.sendActivity('Please think of a number between ' + (state.low + 1) + ' and ' + state.high + ' and I will try to guess it.');
-}
-
-async function askReady(context: TurnContext) {
- await context.sendActivity('Type "ready" when you are ready to start.');
-}
-
-async function askPlayAgain(context: TurnContext) {
-  await context.sendActivity('Would you like to play again?');
-}
+      const zipcode = (context.activity.text || '').trim().toLowerCase();
+      console.log(`zipcode: ${zipcode}`);
+      const url = `${HOST}/data/2.5/weather`;
+      console.log(url, zipcode, openWeatherMapAPIKey);
+      const resp = await request.post(url)
+        .query({zip: zipcode, APPID: openWeatherMapAPIKey});
+      console.log(resp.body);
+      await context.sendActivity(JSON.stringify(resp.body, null, '\t'));
+      await context.sendActivity(USAGE);
+  }
+};
 
 // Listen for incoming requests
-server.post('/api/messages', (req, res) => {
-  // Route received request to adapter for processing
-  adapter.processActivity(req, res, async (context) => {
-    if (context.activity.type === 'conversationUpdate') {
-      for (const member of context.activity.membersAdded!) {
-        if (member.id !== context.activity.recipient.id) { // check if member id equals the bot's id
-          await context.sendActivity('Welcomeeeee to the guess number bot!');
-          await init(context);
-        }
-      }
-    }
-    if (context.activity.type === 'message') {
-      let message = (context.activity.text || '').trim().toLowerCase();
-      const state = await conversationState.read(context);
-      if (state.sessionState === 'askReady') {
-        if (message.startsWith('ready')) {
-          state.sessionState = 'playing';
-        } else {
-          await askReady(context);
-        }
-      }
-      if (state.sessionState === 'playing') {
-        if (message.startsWith('yes')) {
-          state.low = state.guess;
-        } else if (message.startsWith('no')) {
-          state.high = state.guess;
-        }
-        state.guess = Math.floor(((state.high + state.low) / 2));
-        if ((state.high - state.low) === 1) {
-          await context.sendActivity('The number is ' + state.high);
-          await askPlayAgain(context);
-          message = '';
-          state.sessionState = 'askplayagain';
-        } else {
-          await context.sendActivity('Is it greater than ' + state.guess + '?');
-        }
-      }
-      if (state.sessionState === 'askplayagain') {
-        if (message.startsWith('yes')) {
-          await init(context);
-        } else if (message.startsWith('no')) {
-          await context.sendActivity('Thanks for playing. Goodbye!');
-        } else if (message !== '') {
-          await askPlayAgain(context);
-        }
-      }
-    }
+server.post('/api/messages', (req, res, next) => {
+  adapter.processActivity(req, res, botLogic).catch((err) => {
+      console.error("Sorry, something unexpected happened", err);
+      next(err);
   });
 });
