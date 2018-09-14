@@ -1,0 +1,22 @@
+{
+  "name": "luisbot",
+  "version": "1.0.0",
+  "description": "Bot Builder example showing use of LUIS for a bot",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app"
+  },
+  "repository": {
+    "url": "https://github.com/roalexan/bots.git",
+    "type": "git"
+  },
+  "author": "roalexan",
+  "license": "MIT",
+  "dependencies": {
+    "botbuilder": "^4.0.0-preview1.2",
+    "botbuilder-ai": "^4.0.0-preview1.2",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "fetch-ponyfill": "^6.0.2"
+  }
+}
