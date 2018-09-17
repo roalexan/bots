@@ -3,6 +3,11 @@ const express = require('express');
 const { BotFrameworkAdapter, ActivityTypes } = require('botbuilder');
 const { LuisRecognizer } = require('botbuilder-ai');
 
+const { HttpTestRecorder } = require ('botbuilder-http-test-recorder');
+
+const testRecorder = new HttpTestRecorder()
+  .captureLuis();
+
 const { GREETING, EXAMPLES } = require('./text');
 
 dotenv.load({path: `${__dirname}/.env`});
@@ -19,11 +24,18 @@ if (luisSubscriptionKey === '<YOUR-SUBSCRIPTION-KEY>') {
     throw new Error('LUIS_SUBSCRIPTION_KEY not set. Please set in the .env file.');
 }
 
+/*
 const model = new LuisRecognizer({
     appId: luisAppId,
     subscriptionKey: luisSubscriptionKey,
     serviceEndpoint: luisServiceEndpoint
 });
+*/
+
+const model = new LuisRecognizer({
+    applicationId: luisAppId,
+    endpointKey: luisSubscriptionKey,
+    }); 
 
 // Create server
 const server = express();
@@ -33,7 +45,8 @@ server.listen(port, () => console.log(`${server.name} listening on ${port}`));
 const adapter = new BotFrameworkAdapter({
     appId: process.env.MICROSOFT_APP_ID,
     appPassword: process.env.MICROSOFT_APP_PASSWORD
-});
+//})
+}).use(testRecorder);
 
 // Handler for every conversation turn
 const botLogic = async (context) => {
@@ -49,11 +62,11 @@ const botLogic = async (context) => {
         const topIntent = LuisRecognizer.topIntent(luisResult);
         const topIntentScore = luisResult.intents[topIntent].score;
         const entities = [];
-        for (const type in luisResult.entities) {
-            const values = luisResult.entities[type]
-                .map((x) => x.type === 'daterange' || x.type === 'date' ? x.timex : x);
-            entities.push(`**${type}**=${values.join(', ')}`);
-        }
+        //for (const type in luisResult.entities) {
+        //    const values = luisResult.entities[type]
+        //        .map((x) => x.type === 'daterange' || x.type === 'date' ? x.timex : x);
+        //    entities.push(`**${type}**=${values.join(', ')}`);
+        //}
 
         const response = [
             `top intent: **${topIntent || 'n/a'}**`,

@@ -42,7 +42,7 @@ const promptFreeForm = ['3'];
 
 const freeFormPrompt = "ok, what else you got?";
 
-const feedback = new Feedback({ conversationState, feedbackActions, feedbackResponse, dismissAction, promptFreeForm, freeFormPrompt });
+const feedback = new Feedback( conversationState, { feedbackActions, feedbackResponse, dismissAction, promptFreeForm, freeFormPrompt });
 // const feedback = new Feedback({ conversationState, promptFreeForm: true });
 
 const adapter = new BotFrameworkAdapter({
@@ -62,8 +62,8 @@ const botLogic = async (context) => {
         // if user does not click a button, normal bot processing occurs
         // const reply = REPLY + context.activity.text;
         const reply = 'Mostly cloudy. A slight chance of showers this morning. Much cooler with highs in the mid 70s. East winds 5 to 10 mph. Gusts up to 20 mph this morning. Chance of rain 20 percent.';
-        const message = Feedback.requestFeedback(context, reply);
-        await context.sendActivity(message);
+        //const message = Feedback.requestFeedback(context, reply);
+        await Feedback.sendFeedbackActivity(context, reply);
     }
   };
 
