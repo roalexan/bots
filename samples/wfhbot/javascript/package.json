@@ -1,0 +1,25 @@
+{
+  "name": "luisbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "@microsoft/microsoft-graph-client": "^1.2.0",
+    "botbuilder": "^3.13.1",
+    "botbuilder-azure": "^3.0.4",
+    "dotenv": "^6.0.0",
+    "moment-timezone": "^0.5.21",
+    "restify": "^5.0.0",
+    "windows-iana": "^2.0.1"
+  },
+  "devDependencies": {
+    "request": "^2.81.0",
+    "zip-folder": "^1.0.0"
+  },
+  "scripts": {
+    "start": "node app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
