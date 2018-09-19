@@ -1,9 +1,9 @@
 [
   {
     "scope": "https://westus.api.cognitive.microsoft.com:443",
-    "method": "GET",
-    "path": "/luis/v2.0/apps/testAppId?subscription-key=testKey&q=Show%20me%20all%20docs%20for%20Oracle",
-    "body": "",
+    "method": "POST",
+    "path": "/luis/v2.0/apps/testAppId?verbose=false&log=true",
+    "body": "\"Show me all docs for Oracle\"",
     "status": 200,
     "response": {
       "query": "Show me all docs for Oracle",
@@ -23,17 +23,19 @@
       "Content-Type",
       "application/json; charset=utf-8",
       "Apim-Request-Id",
-      "8327263b-4fbf-4a7b-9c1e-d414664c3fe1",
+      "90d5476a-bdc0-4408-80e6-d0e59bddc3ea",
       "Request-Id",
-      "8327263b-4fbf-4a7b-9c1e-d414664c3fe1",
+      "90d5476a-bdc0-4408-80e6-d0e59bddc3ea",
       "Strict-Transport-Security",
       "max-age=31536000; includeSubDomains; preload",
+      "Request-Context",
+      "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b",
       "X-Powered-By",
       "ASP.NET",
       "x-content-type-options",
       "nosniff",
       "Date",
-      "Fri, 14 Sep 2018 14:52:08 GMT",
+      "Wed, 19 Sep 2018 14:27:36 GMT",
       "Connection",
       "close"
     ]

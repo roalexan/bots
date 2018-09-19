@@ -4,7 +4,7 @@ const { HttpTestPlayback } = require('botbuilder-http-test-recorder');
 const { expect } = require('chai');
 
 describe('My bot', () => {
-  it('should ask a question', async () => {
+  it('should ask a question and return the correct intent', async () => {
     const testDataDirectory = './test/data';
     const playback = new HttpTestPlayback({testDataDirectory});
 
@@ -18,21 +18,17 @@ describe('My bot', () => {
       // logic under test goes here
       const results = await luisRecognizer.recognize(context);
       const intent = LuisRecognizer.topIntent(results);
-      if (intent === 'None') {
-        await context.sendActivity('I do not understand');
-      } else {
-        await context.sendActivity('OK!');
-      }
+      await context.sendActivity(intent);
     });
 
     // see naming above at rec:stop[:name]
-    // playback.load('C:\microsoft\repos\bots\samples\testplayback\javascript\luis1.json');
+    // console.log(playback.load('luis1.json'));
     playback.load('luis1.json');
 
     // execute the test logic
     await adapter
       .send('Show me all docs for Oracle')
-      // .assertReply((resp) => expect(resp.text).to.equal('OK!'));
-      .assertReply((resp) => expect(resp.topScoringIntent).to.equal('FindDocForProject'));
+      // .assertReply((resp) => console.log(resp));
+      .assertReply((resp) => expect(resp.text).to.equal('FindDocForProject'));
   });
 });

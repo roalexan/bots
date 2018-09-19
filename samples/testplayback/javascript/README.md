@@ -1,8 +1,7 @@
-# TypeScript GuessNumberBot Sample
+# JavaScript TestPlayback Sample
 
 ## Prerequisites
 
-- [Bot Framework emulator](https://github.com/Microsoft/BotFramework-Emulator)
 - NodeJS
 
 ## Install
@@ -10,12 +9,9 @@
 - create `repo-dir` (local repo directory)
 - cd `repo-dir`
 - git clone https://github.com/roalexan/bots.git
-- cd `repo-dir`\bots\samples\guessnumberbot\typescript
+- cd `repo-dir`\bots\samples\testplayback\javascript
 - npm install
 
 ## Usage
 
-- npm start (shows `app listening on 3978`)
-- from emulator, select `http://localhost:3978/api/messages`
-- click `CONNECT`
-- play guessing game
+- npm test (will run unit test)
