@@ -6,7 +6,10 @@ const { expect } = require('chai');
 describe('My bot', () => {
   it('should ask a question and return the correct intent', async () => {
     const testDataDirectory = './test/data';
-    const playback = new HttpTestPlayback({testDataDirectory});
+    // const playback = new HttpTestPlayback({testDataDirectory});
+    // const playback = new HttpTestPlayback(testDataDirectory = './test/data');
+    const playback = new HttpTestPlayback({testDataDirectory: './test/data'});
+    // const playback = new HttpTestPlayback();
 
     // parameters should match the settings used in `textRecorder.captureLuis()`
     const luisRecognizer = new LuisRecognizer({
@@ -22,8 +25,9 @@ describe('My bot', () => {
     });
 
     // see naming above at rec:stop[:name]
-    // console.log(playback.load('luis1.json'));
-    playback.load('luis1.json');
+    // console.log(playback.load('luis3.json'));
+    playback.load('luis3.json');
+    // playback.load('C:/microsoft/repos/bots/samples/testplayback/javascript/test/data/luis1.json');
 
     // execute the test logic
     await adapter
