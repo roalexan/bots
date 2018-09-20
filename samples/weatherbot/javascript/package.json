@@ -1,0 +1,23 @@
+{
+  "name": "weatherbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@types/superagent": "^3.8.4",
+    "botbuilder": "^4.0.0-preview1.2",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "superagent": "^3.8.3"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^4.0.3",
+    "@types/express": "^4.16.0"
+  }
+}
