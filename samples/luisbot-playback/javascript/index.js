@@ -28,7 +28,7 @@ describe('My bot', () => {
     // console.log(playback.load('luis3.json'));
     // playback.load('luis3.json');
     // playback.load('C:/microsoft/repos/bots/samples/testplayback/javascript/test/data/luis1.json');
-    playback.load('2.json');
+    playback.load('luis1.json');
 
     // execute the test logic
     await adapter
