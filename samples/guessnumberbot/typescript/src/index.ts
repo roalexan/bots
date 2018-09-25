@@ -1,4 +1,4 @@
-import { BotFrameworkAdapter, BotStateSet, ConversationState, MemoryStorage, TurnContext, UserState } from 'botbuilder';
+import { AutoSaveStateMiddleware, BotFrameworkAdapter, BotStateSet, ConversationState, MemoryStorage, TurnContext, UserState } from 'botbuilder';
 import * as express from 'express';
 
 // Create HTTP server
@@ -22,13 +22,15 @@ interface State {
   guess: number;
 }
 
-const conversationState = new ConversationState<State>(new MemoryStorage());
+// const conversationState = new ConversationState<State>(new MemoryStorage());
+const conversationState = new ConversationState(new MemoryStorage());
+const autoSaveState = new AutoSaveStateMiddleware(conversationState);
 
 // middleware code that writes back the conversation state at the end of the "turn"
-adapter.use(conversationState);
+adapter.use(autoSaveState);
 
 async function init(context: TurnContext) {
-  const state = await conversationState.read(context);
+  const state = await conversationState.load(context);
   state.low = MIN;
   state.high = MAX;
   await showInstructions(context);
@@ -37,7 +39,7 @@ async function init(context: TurnContext) {
 }
 
 async function showInstructions(context: TurnContext) {
-  const state = await conversationState.read(context);
+  const state = await conversationState.load(context);
   await context.sendActivity('Please think of a number between ' + (state.low + 1) + ' and ' + state.high + ' and I will try to guess it.');
 }
 
@@ -63,7 +65,7 @@ server.post('/api/messages', (req, res) => {
     }
     if (context.activity.type === 'message') {
       let message = (context.activity.text || '').trim().toLowerCase();
-      const state = await conversationState.read(context);
+      const state = await conversationState.load(context);
       if (state.sessionState === 'askReady') {
         if (message.startsWith('ready')) {
           state.sessionState = 'playing';

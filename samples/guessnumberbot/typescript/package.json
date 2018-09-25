@@ -14,7 +14,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "botbuilder": "^4.0.0-preview1.2",
+    "botbuilder": "^4.0.6",
     "express": "^4.16.3",
     "tslint": "^5.11.0",
     "typescript": "^3.0.1"
