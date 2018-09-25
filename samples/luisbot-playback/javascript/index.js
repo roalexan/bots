@@ -26,8 +26,9 @@ describe('My bot', () => {
 
     // see naming above at rec:stop[:name]
     // console.log(playback.load('luis3.json'));
-    playback.load('luis3.json');
+    // playback.load('luis3.json');
     // playback.load('C:/microsoft/repos/bots/samples/testplayback/javascript/test/data/luis1.json');
+    playback.load('2.json');
 
     // execute the test logic
     await adapter

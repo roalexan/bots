@@ -11,7 +11,10 @@
   "license": "MIT",
   "dependencies": {
     "@types/superagent": "^3.8.4",
-    "botbuilder": "^4.0.0-preview1.2",
+    "botbuilder": "^4.0.6",
+    "botbuilder-core": "^4.0.6",
+    "botbuilder-feedback": "file:../../../../botbuilder-utils-js/packages/botbuilder-feedback",
+    "botbuilder-http-test-recorder": "file:../../../../botbuilder-utils-js/packages/botbuilder-http-test-recorder",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "superagent": "^3.8.3"

@@ -1,0 +1,71 @@
+[
+  {
+    "scope": "http://api.openweathermap.org:80",
+    "method": "POST",
+    "path": "/data/2.5/weather?zip=02421&APPID=******",
+    "body": "",
+    "status": 200,
+    "response": {
+      "coord": {
+        "lon": -71.22,
+        "lat": 42.45
+      },
+      "weather": [
+        {
+          "id": 802,
+          "main": "Clouds",
+          "description": "scattered clouds",
+          "icon": "03d"
+        }
+      ],
+      "base": "stations",
+      "main": {
+        "temp": 287.22,
+        "pressure": 1037,
+        "humidity": 51,
+        "temp_min": 285.35,
+        "temp_max": 288.15
+      },
+      "visibility": 16093,
+      "wind": {
+        "speed": 4.6,
+        "deg": 80
+      },
+      "clouds": {
+        "all": 40
+      },
+      "dt": 1537815360,
+      "sys": {
+        "type": 1,
+        "id": 1951,
+        "message": 0.0044,
+        "country": "US",
+        "sunrise": 1537785314,
+        "sunset": 1537828633
+      },
+      "id": 420016949,
+      "name": "Boston",
+      "cod": 200
+    },
+    "rawHeaders": [
+      "Server",
+      "openresty",
+      "Date",
+      "Mon, 24 Sep 2018 19:06:18 GMT",
+      "Content-Type",
+      "application/json; charset=utf-8",
+      "Content-Length",
+      "454",
+      "Connection",
+      "close",
+      "X-Cache-Key",
+      "/data/2.5/weather?APPID=1ee5810d2b43bd05c343a6a8f677b7ed&zip=02421",
+      "Access-Control-Allow-Origin",
+      "*",
+      "Access-Control-Allow-Credentials",
+      "true",
+      "Access-Control-Allow-Methods",
+      "GET, POST"
+    ]
+  }
+]

@@ -13,9 +13,11 @@
   "author": "roalexan",
   "license": "MIT",
   "dependencies": {
-    "botbuilder": "^4.0.1-aicat1.4",
-    "botbuilder-ai": "^4.0.1-aicat1.4",
-    "botbuilder-http-test-recorder": "^4.0.9",
+    "botbuilder": "^4.0.6",
+    "botbuilder-ai": "^4.0.6",
+    "botbuilder-feedback": "file:../../../../botbuilder-utils-js/packages/botbuilder-feedback",
+    "botbuilder-http-test-recorder": "file:../../../../botbuilder-utils-js/packages/botbuilder-http-test-recorder",
+    "botbuilder-transcript-cosmosdb": "file:../../../../botbuilder-utils-js/packages/botbuilder-transcript-cosmosdb",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "fetch-ponyfill": "^6.0.2"

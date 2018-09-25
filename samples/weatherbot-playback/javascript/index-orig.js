@@ -5,15 +5,7 @@ const request = require('superagent')
 const { GREETING, REPLY, USAGE } = require('./text');
 
 const { HttpTestRecorder } = require ('botbuilder-http-test-recorder');
-const testRecorder = new HttpTestRecorder({
-  requestFilter: [(req) => req.scope.indexOf("openweathermap.org") != -1],
-  transformRequest: [(def) => {
-    const LUIS_QS_KEY = /APPID=[^&]+/;
-    const testKey = "******";
-    def.path = def.path.replace(LUIS_QS_KEY, `APPID=${testKey}`)
-    return def;
-  }]
-});
+const testRecorder = new HttpTestRecorder();
 
 const HOST = 'http://api.openweathermap.org';
 
