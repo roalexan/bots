@@ -6,8 +6,8 @@ const { CosmosDbTranscriptStore } = require('botbuilder-transcript-cosmosdb');
 const { DocumentClient } = require('documentdb');
 
 // Cosmos DB configuration
-const serviceEndpoint = 'https://rbacosmosdb.documents.azure.com:443/';
-const masterKey = '1oWkN6ziqi2oBQUsIm2Qt8e7ZUjqpVJzi1k174O1fMBryWKjC2UBF02c8GZpnkRzd98ycoWSe9qhFjNNKDdDQw==';
+const serviceEndpoint = 'YOUR-COSMOSDB-ENDPOINT';
+const masterKey = 'YOUR-MASTER-KEY';
 const client = new DocumentClient(serviceEndpoint, { masterKey });
 
 // Create server

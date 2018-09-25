@@ -1,4 +1,4 @@
-const { ActionTypes, ActivityTypes, BotFrameworkAdapter, CardAction, ConversationState, MemoryStorage, MessageFactory } = require('botbuilder');
+const { AutoSaveStateMiddleware, ActionTypes, ActivityTypes, BotFrameworkAdapter, CardAction, ConversationState, MemoryStorage, MessageFactory } = require('botbuilder');
 const { Feedback, FeedbackAction, Message } = require('botbuilder-feedback');
 const express = require('express');
 const { GREETING, REPLY, USAGE } = require('./text');
@@ -8,7 +8,9 @@ const server = express();
 const port = process.env.PORT || 3978;
 server.listen(port, () => console.log(`${server.name} listening on ${port}`));
 
-const conversationState = new ConversationState(new MemoryStorage()); // all defaults
+const conversationState = new ConversationState(new MemoryStorage());
+const autoSaveState = new AutoSaveStateMiddleware(conversationState);
+
 // const feedback = new Feedback({ conversationState }); // customization available here
 
 // const feedbackActions = ['👍 good', '👎 bad', '👌 ok', '✌ victory'];
@@ -48,7 +50,7 @@ const feedback = new Feedback( conversationState, { feedbackActions, feedbackRes
 const adapter = new BotFrameworkAdapter({
     appId: process.env.MICROSOFT_APP_ID,
     appPassword: process.env.MICROSOFT_APP_PASSWORD,
-  }).use(conversationState, feedback);
+  }).use(autoSaveState, feedback);
 
 // Handler for every conversation turn
 const botLogic = async (context) => {

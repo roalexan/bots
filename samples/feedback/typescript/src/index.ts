@@ -1,4 +1,4 @@
-import { ActionTypes, ActivityTypes, BotFrameworkAdapter, CardAction, ConversationState, MemoryStorage, MessageFactory } from 'botbuilder';
+import { AutoSaveStateMiddleware, ActionTypes, ActivityTypes, BotFrameworkAdapter, CardAction, ConversationState, MemoryStorage, MessageFactory } from 'botbuilder';
 // import { ActionTypes, CardAction, CardFactory, MessageFactory, TurnContext } from 'botbuilder';
 import { Feedback, FeedbackAction, Message } from 'botbuilder-feedback';
 // import { CardAction } from 'botframework-connector/lib/generated/models/mappers';
@@ -12,6 +12,7 @@ const port = process.env.PORT || 3978;
 server.listen(port, () => console.log(`${server.name} listening on ${port}`));
 
 const conversationState = new ConversationState(new MemoryStorage()); // all defaults
+const autoSaveState = new AutoSaveStateMiddleware(conversationState);
 // const feedback = new Feedback({ conversationState }); // customization available here
 
 // const feedbackActions: FeedbackAction[] = ['👍 good', '👎 bad', '👌 ok', '✌ victory'];
@@ -45,12 +46,12 @@ const freeFormPrompt: Message = "ok, what else you got?";
 
 // const feedback = new Feedback({ conversationState, feedbackActions, feedbackResponse, dismissAction, promptFreeForm, freeFormPrompt });
 
-const feedback = new Feedback({ conversationState, promptFreeForm: true });
+const feedback = new Feedback(conversationState, { promptFreeForm: true });
 
 const adapter = new BotFrameworkAdapter({
     appId: process.env.MICROSOFT_APP_ID,
     appPassword: process.env.MICROSOFT_APP_PASSWORD,
-  }).use(conversationState, feedback);
+  }).use(autoSaveState, feedback);
 
 // Handler for every conversation turn
 const botLogic = async (context: any) => {
@@ -64,7 +65,7 @@ const botLogic = async (context: any) => {
         // if user does not click a button, normal bot processing occurs
         // const reply = REPLY + context.activity.text;
         const reply = 'Mostly cloudy. A slight chance of showers this morning. Much cooler with highs in the mid 70s. East winds 5 to 10 mph. Gusts up to 20 mph this morning. Chance of rain 20 percent.';
-        const message = Feedback.requestFeedback(context, reply);
+        const message = Feedback.createFeedbackMessage(context, reply);
         await context.sendActivity(message);
     }
   };
